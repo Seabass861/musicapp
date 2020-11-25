@@ -14,7 +14,6 @@ app.use(bodyParser.json())
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-
 // GET SEARCH RESULTS
 app.get('/api/search/:term/:media', function (req, res) {
 
