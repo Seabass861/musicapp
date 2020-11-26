@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// const cors = require('cors');
 const helmet = require("helmet");
 const app = express();
 const fileHandler = require('fs');
@@ -13,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // // Serve static files from the React app
-// app.use(express.static(path.join(__dirname, 'client/build')));
 
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
@@ -23,22 +21,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 }
-
-// // ** MIDDLEWARE ** //
-// const whitelist = ['http://localhost:3001', 'https://intense-retreat-63877.herokuapp.com/'];
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         console.log("** Origin of request " + origin)
-//         if (whitelist.indexOf(origin) !== -1 || !origin) {
-//             console.log("Origin acceptable")
-//             callback(null, true)
-//         } else {
-//             console.log("Origin rejected")
-//             callback(new Error('Not allowed by CORS'))
-//         }
-//     }
-// }
-// app.use(cors(corsOptions))
 
 // GET SEARCH RESULTS
 app.get('/api/search/:term/:media', function (req, res) {
