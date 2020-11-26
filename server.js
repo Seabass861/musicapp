@@ -11,8 +11,17 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+// // Serve static files from the React app
+// app.use(express.static(path.join(__dirname, 'client/build')));
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Handle React routing, return all requests to React app
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
 
 // GET SEARCH RESULTS
 app.get('/api/search/:term/:media', function (req, res) {
@@ -108,9 +117,6 @@ app.use(function (err, req, res, next) {
     console.log(err.stack)
     res.status(500).send('Something broke!')
 })
-
-
-
 
 
 const PORT = process.env.PORT || 3001;
